@@ -15,6 +15,14 @@ std::string Parser :: get_line()
 	std::getline(m_fin, line);
 	return line;
 }
+void Parser::set_numbers(size_t& a)
+{
+	m_ind = a;
+}
+size_t Parser::Get_numbers()
+{
+	return m_ind;
+}
 void Parser :: get_next_comm(std::string line)
 {
 	std::string str;
@@ -106,7 +114,126 @@ void Parser::CloseFile()
 {
 	m_fin.close();
 }
-Read::Read()
+void Read::TO_DO(std::string& str)
 {
-	m_Read_ind = 1;
+	m_fin.open(str, std::ofstream::app);
+	if (!m_fin.is_open())
+	{
+		std::cout << "file cannot be read" << "/n";
+	}
+	else
+	{
+		try
+		{
+			if (my_ind == 0)
+				throw "not good";
+		}
+		catch (const char* exception)
+		{
+			std::cout << "Warning! The last text was not saved. Do you want to continue?"
+				<< "\n" << "1 - yess, 2 - no";
+			size_t n; 
+			std::cin >> n;
+			if (n == 1)
+				throw 1.0;
+			else
+			{
+				m_fin.close();
+				MyError Exception;
+			}
+		}
+		catch (double)
+		{
+			my_ind = 0;
+			while (!m_fin.eof())
+			{
+				std::string line;
+				std::getline(m_fin, line);
+				m_vect.push_back(line);
+			}
+		}		
+	}
+	m_fin.close();
+}
+void Write::TO_DO(std::string& str)
+{
+	m_fin1.open(str, std::ofstream::app);
+	if (!m_fin1.is_open())
+	{
+		std::cout << "file cannot be read" << "/n";
+	}
+	else
+	{
+		my_ind = 1;
+		size_t n = m_vect.size();
+		for (int i = 0; i < n; i++)
+		{
+			m_fin1 << m_vect[i] << "\n";
+		}
+	}
+	m_fin1.close();
+}
+void Sort::TO_DO(std::string& str)
+{
+	my_ind = 0;
+	std::sort(m_vect.begin(), m_vect.end());
+}
+void Replace::TO_DO(std::string& str)
+{
+	std::vector<std::string>args;
+	try
+	{
+		if (str.size() <= 1)
+		{
+			throw "No arguments";
+		}			
+		else
+			throw 1.0;	
+	}
+	catch (const char* exception)
+	{
+		std::cout << " No arguments is given. This command cannot be done." << std::endl;
+	}
+	catch(double)
+	{
+		while (str.size() >= 1)  //std::string::npos
+		{
+			std::string token;
+			std::string delimeter = " ";
+			token = str.substr(0, str.find(delimeter));
+			args.push_back(token);
+			size_t n = token.size();
+			int m = str.size();
+			int q = m - n - 1;
+			if (q > 0)
+				str = str.substr(n + 1);
+			else str.clear();
+		}
+		size_t n = m_vect.size();
+		for (int i = 0; i < n; i++)
+		{
+			std::string trr = m_vect[i]; //нужно как-то поменять. 
+			//trr.replace()
+		}
+	}
+}
+void Grep::TO_DO(std::string& str)
+{
+	my_ind = 0;
+	size_t n = m_vect.size();
+	std::vector<std::string>notes;
+	for (int i = 0;i < n;i++)
+	{		
+		std::string token;
+		std::string delimeter = " ";
+		size_t n = m_vect[i].find(str, 0);
+		if (n != std::string::npos)
+			notes.push_back(m_vect[i]);
+		else m_vect[i].clear();
+	}
+	m_vect.clear();
+	for (int j = 0; j < notes.size(); j++)
+	{
+		m_vect.push_back(notes[j]);
+	}
 }
