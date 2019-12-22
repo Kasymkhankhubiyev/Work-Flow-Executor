@@ -6,6 +6,8 @@
 #include <vector>
 #include <map>
 
+//void compare_df(std::map<std::string, Worker*>& inst, std::string& str);
+
 class res
 {};
 class Parser //анализатор текстовой информации;
@@ -13,7 +15,7 @@ class Parser //анализатор текстовой информации;
 private:
 	std::string m_parser;
 	std::ifstream m_fin;
-	int m_ind;
+	size_t m_ind;
 	std::string m_com;
 	std::string m_arg;
 public:
@@ -35,11 +37,13 @@ public:
 
 	bool endOfInstruction();
 
-	int get_com_num();
+	size_t get_com_num(std::string& line);
 
-	std::string get_con_name();
+	size_t get_com_arr(std::string& line);
 
-	std::string get_com_atg(); 
+	std::string get_com_name(std::string& line);
+
+	void get_com_args(std::string& line, std::vector<std::string>& argument); 
 
 	void CloseFile();
 
@@ -97,3 +101,4 @@ public:
 	{}
 };
 #endif//
+
