@@ -73,7 +73,7 @@ void main()
 							trin = parser.get_line(); //получаем строку
 							size_t n, num, ptr;
 							size_t w = trin.size(); //смотрим ее размер
-							size_t length = w / 3 + 2; //определяем количество цифр в строке, т.к. нам известна структура
+							size_t length = w / 3 + 1; //определяем количество цифр в строке, т.к. нам известна структура
 							parser.set_numbers(length); //кладем значение в Parser
 							delete[] arr;
 							arr = nullptr;
@@ -112,7 +112,7 @@ void main()
 		{
 			//pair<Worker*, std::string> s = programm[arr[k]];
 			//s.first->TO_DO(s.second);
-			programm[arr[k]].first->TO_DO(programm[arr[k]].second); //закручиваем наш обработчик по порядку по массиву
+			programm[arr[j]].first->TO_DO(programm[arr[j]].second); //закручиваем наш обработчик по порядку по массиву
 		}
 	}
 	catch (std::exception const& Er)
