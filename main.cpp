@@ -7,6 +7,8 @@ using namespace std;
 
 void main()
 {
+	setlocale(LC_ALL, "rus");
+
 	size_t *arr = new size_t[1];  //выделяем динамическую память, массив нам понадобится для хранения списка последовательности команд
 	std::map<std::string, Worker *> inst; //Workers storage
 	inst["Read"] = new Read; //сразу заполняем наш контейнер, каждый указывает на класс обработчика
@@ -22,7 +24,7 @@ void main()
 
 	Worker* worker = nullptr;
 
-	std::map<size_t, pair<Worker *, string>>programm;
+	std::map<size_t, pair<Worker*, string>>programm;
 
 	//создаем класс, позволяющий записывать данные в файл;
 	int k = 0;
@@ -60,8 +62,6 @@ void main()
 							worker = nullptr;
 							worker = inst.at(trip);
 							programm[q] = pair<Worker*, string>(inst[trip], str); //аргументы не разделены, если их несколько,
-
-							std::cout << std::endl;
 							//обработка аргументов реализована в классах обработчика
 						}
 					}
@@ -69,20 +69,24 @@ void main()
 					{
 						while (!parser.endOfInstruction())
 						{
+							std::vector<size_t>arug;
 							std::string trin;
+							size_t length;
 							trin = parser.get_line(); //получаем строку
 							size_t n, num, ptr;
-							size_t w = trin.size(); //смотрим ее размер
-							size_t length = w / 3 + 1; //определяем количество цифр в строке, т.к. нам известна структура
-							parser.set_numbers(length); //кладем значение в Parser
-							delete[] arr;
-							arr = nullptr;
-							arr = new size_t[length]; //обнуляем массив и выделяем нужное количество памяти
 							while (trin.size() >= 1)  //std::string::npos
 							{
-								arr[k] = parser.get_com_arr(trin); //получаем последовательность чисел и записываем в массив
-								k++;
-								//else trin = trin.substr(0);
+								
+								arug.push_back(parser.get_com_arr(trin));//получаем последовательность чисел и записываем в массив
+								length = arug.size();
+							}
+							delete[] arr;
+							arr = nullptr;
+							arr = new size_t[length];//обнуляем массив и выделяем нужное количество памяти
+							parser.set_numbers(length); //кладем значение в Parser
+							for (int i = 0; i < length; i++)
+							{
+								arr[i] = arug[i];
 							}
 						}
 					}
@@ -139,6 +143,6 @@ void main()
 
 	size_t end_time = clock(); //время окончания работы, в конце выводим разницу времен, чтобы оценить затраченное на обработку время.
 
-	std::cout << "It takes " << end_time - start_time << "minutes to work the commands out!   " << std::endl;
+	std::cout << "It takes " << end_time - start_time << "     ms to work the commands out!   " << std::endl;
 	std::cout << "Good bye!";
 }
